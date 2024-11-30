@@ -16,10 +16,12 @@ npm install --save-dev hardhat @nomicfoundation/hardhat-toolbox<br/>
 npx hardhat init<br/>
 
 2. 로컬네트워크 시작<br/>
+_터미널에서 실행_<br/>
 npx hardhat node<br/>
 
 3. 로컬네트워크 테스트<br/>
-npx hardhat run scripts/test-bcmd-sto.js --network localhost<br/>
+_새로운 터미널에서 실행_<br/>
+npx hardhat run scripts/1.test-bcmd-sto.js --network localhost<br/>
 
 
 기타<br/>

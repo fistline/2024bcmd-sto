@@ -14,9 +14,10 @@ pragma solidity >=0.4.22 <0.9.0;
 [내부통제]
 - 내부고객대상
 - KYC를 진행
+- 전문투자자와 일반투자자 구분
 
 [청약및배정]
-- 투자자별 최소, 최대량 제한
+- 투자자별  최대량 제한
 
 [투자자권리]
 - 투자자총회를 구현
@@ -86,7 +87,8 @@ contract BCMDSTO {
     event ProposalCreated(uint256 indexed proposalId, string description, uint256 startTime, uint256 endTime);
     event Voted(uint256 indexed proposalId, address indexed voter, bool support, uint256 votes);
     event ProposalExecuted(uint256 indexed proposalId);
-    
+    event TokensBurned(address indexed burner, uint256 amount);
+
     modifier onlyOwner() {
         require(msg.sender == owner, "Only owner can call this function");
         _;
@@ -191,6 +193,16 @@ contract BCMDSTO {
         
         emit Transfer(msg.sender, _to, _value);
         return true;
+    }
+
+    // 소각 기능 (소유자만 호출 가능)
+    function burn(uint256 amount) public onlyOwner {
+        require(balanceOf[owner] >= amount, "Insufficient balance to burn");
+        
+        balanceOf[owner] -= amount;
+        totalSupply -= amount;
+
+        emit TokensBurned(owner, amount); // 소각 이벤트 발생
     }
     
 
